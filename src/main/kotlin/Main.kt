@@ -1,30 +1,48 @@
-fun main(args: Array<String>) {
+import java.lang.NullPointerException
+
+fun main() {
     // test text
-    // 大九挑六 da jiu tiao liu
-    parseTokens(inputAndTokenize())
+    // <blank>
+    // 大九挑六
+    // da jiu tiao liu
+    // !@#$
+    // é
+
+
+    // get input, loop until you have a non-empty input
+    var input = ""
+    while (input != "exit") {
+        input = inputJianzi()
+        val tokens = tokenize(input)
+        parseTokens(tokens)
+    }
 }
 
-fun inputAndTokenize() : List<String> {
-    print("Input: ")
-    val tokens: List<String>
-    val input = readLine()!!
-    if (isChinese(input)) {
-        tokens = mutableListOf<String>()
-        for (character in input) {
+fun tokenize(inputLine: String) : List<String> {
+    val tokens = mutableListOf<String>()
+    // if it is Chinese hanzi, tokenize every character
+    if (inputLine[0].code >= HANZI_CODE_MIN) {
+        for (character in inputLine) {
             tokens.add(character.toString())
         }
     }
+    // if it is Pinyin, tokenize by space
+    else if (inputLine[0].isLetterOrDigit()) {
+        return inputLine.split(" ")
+    }
     else {
-        tokens = input.split(" ")
+        println("Input is invalid. Please retry")
     }
     return tokens
 }
 
-fun isChinese(inputLine: String) : Boolean {
-    return inputLine[0].code >= ENG_ASCII_MAX
-    // assume if code value of first character is > 128, then it is probably Chinese
-
-    //anything below 11904 is probably invalid, but should it be checked?
+fun inputJianzi() : String {
+    var input = ""
+    while (input == "") {
+        print("Input: ")
+        input = readLine()!!
+    }
+    return input
 }
 
 fun parseTokens(tokenizedInput: List<String>) {
