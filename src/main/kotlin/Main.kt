@@ -1,51 +1,34 @@
-import java.lang.NullPointerException
-
 fun main() {
-    // test text
+    // ======== test texts:========
     // <blank>
     // 大九挑六
     // da jiu tiao liu
     // !@#$
     // é
 
-
-    // get input, loop until you have a non-empty input
+    var tokens : List<String>
     var input = ""
+
     while (input != "exit") {
         input = inputJianzi()
-        val tokens = tokenize(input)
-        parseTokens(tokens)
-    }
-}
-
-fun tokenize(inputLine: String) : List<String> {
-    val tokens = mutableListOf<String>()
-    // if it is Chinese hanzi, tokenize every character
-    if (inputLine[0].code >= HANZI_CODE_MIN) {
-        for (character in inputLine) {
-            tokens.add(character.toString())
+        if (input.isNotBlank() && input != "exit") {
+            tokens = tokenize(input)
+            parseTokens(tokens)
+            val unifiedTokens = unifyHanziTokens(tokens)
+            println("Now these should be unified input")
+            parseTokens(unifiedTokens)
         }
     }
-    // if it is Pinyin, tokenize by space
-    else if (inputLine[0].isLetterOrDigit()) {
-        return inputLine.split(" ")
-    }
-    else {
-        println("Input is invalid. Please retry")
-    }
-    return tokens
 }
 
 fun inputJianzi() : String {
-    var input = ""
-    while (input == "") {
-        print("Input: ")
-        input = readLine()!!
+    print("Input: ")
+    val input: String? = readLine()
+    // return input if it's not blank or null
+    if (input != "" && input != null) {
+        return input
     }
-    return input
-}
-
-fun parseTokens(tokenizedInput: List<String>) {
-    //todo: make a look up table
-    for (token in tokenizedInput) println(token)
+    // default - this should not happen
+    println("Input was blank or null")
+    return ""
 }
