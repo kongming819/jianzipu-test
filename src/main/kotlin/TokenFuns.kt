@@ -77,7 +77,7 @@ fun parseTokens(tokenizedInput: List<String>) {
             finalParsedTokens.add(bodyTokens)
             println("Final parsed tokens are $finalParsedTokens")
         }
-        "托", "擘", "抹", "勾", "剔", "打", "摘", -> {
+        "托", "擘", "抹", "挑", "勾", "剔", "打", "摘", -> {
             finalParsedTokens.add(listOf(""))
             bodyTokensCollector(0, tokenizedInput, bodyTokens)
             println("Body tokens are $bodyTokens")
@@ -105,6 +105,7 @@ fun headTokensCollector(tokensList: List<String>, headTokens: MutableList<String
 
 fun bodyTokensCollector(index : Int = 0, tokensList: List<String>, bodyTokens: MutableList<String>) {
     for (i in index until tokensList.size) {
+        // we assume that the rest of the tokens belong to the body of the character
         bodyTokens.add(tokensList[i])
     }
 }
