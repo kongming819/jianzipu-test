@@ -29,6 +29,8 @@ fun pinyinToHanzi(tokensList: List<String>) : List<String> {
 }
 
 fun unifyHanziTokens(tokensList: List<String>) : List<String> {
+    // This function takes a list of hanzi tokens and translates variants to the internal unified list
+    // as defined in LUT.kt
     val unifiedTokens = mutableListOf<String>()
     for (token in tokensList) {
         if (token in unifyHanziMap) {
@@ -46,10 +48,63 @@ fun parseTokens(tokenizedInput: List<String>) {
 
     // todo: ambiguous case handler - 急, 泛, 绰, 注, numbers, 大, 小
 
+    // debug purposes:
     for (token in tokenizedInput) println(token)
+
+    val finalParsedTokens = mutableListOf<List<String>>()
+
+    // todo: taoqisansheng handler and other special cases
+
+    if (tokenizedInput.any{ it in sequentialJianziTrigger }) {
+        //todo
+        println("This is a sequential jianzi")
+    }
+    if (tokenizedInput.any{ it in polyphonicJianziTrigger }) {
+        //todo
+        println("This is a polyphonic jianzi")
+    }
+    // todo: the following is for single note jianzi, need to implement sequential and polyphonic
+    val headTokens = mutableListOf<String>()
+    val bodyTokens = mutableListOf<String>()
     when (tokenizedInput[0]) {
-        "散", "大", "食", "中", "名", "跪", "就" -> println("head") // run head processor
-        "托", "擘", "抹", "勾", "剔", "打", "摘" -> println("body") // run body processor
-        else -> println("aux")
+        "散", "大", "食", "中", "名", "跪", "就", "反", -> {
+            // collect all head tokens
+            val nextIndex = headTokensCollector(tokenizedInput, headTokens)
+            println("Head tokens are $headTokens and the next index to process is $nextIndex")
+            finalParsedTokens.add(headTokens)
+            bodyTokensCollector(nextIndex, tokenizedInput, bodyTokens)
+            println("Body tokens are $bodyTokens")
+            finalParsedTokens.add(bodyTokens)
+            println("Final parsed tokens are $finalParsedTokens")
+        }
+        "托", "擘", "抹", "勾", "剔", "打", "摘", -> {
+            finalParsedTokens.add(listOf(""))
+            bodyTokensCollector(0, tokenizedInput, bodyTokens)
+            println("Body tokens are $bodyTokens")
+            finalParsedTokens.add(bodyTokens)
+            println("Final parsed tokens are $finalParsedTokens")
+        }
+        else -> println("aux") // todo
+    }
+}
+
+fun headTokensCollector(tokensList: List<String>, headTokens: MutableList<String>) : Int {
+    for ((i, token) in tokensList.withIndex()) {
+        if (i == 0) {
+            // the first character is obviously not a number, so continue
+            headTokens.add(token)
+            continue
+        }
+        if ( isNumber(token) ) {
+            headTokens.add(token)
+        }
+        else return i
+    }
+    return 0
+}
+
+fun bodyTokensCollector(index : Int = 0, tokensList: List<String>, bodyTokens: MutableList<String>) {
+    for (i in index until tokensList.size) {
+        bodyTokens.add(tokensList[i])
     }
 }

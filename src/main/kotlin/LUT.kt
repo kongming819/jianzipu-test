@@ -1,9 +1,39 @@
-const val PINYIN_CODE_MAX: Int = 128
-
-const val HANZI_CODE_MIN: Int = 11904
+val unifyHanziMap = mapOf(
+    "踢" to "剔", // ti
+    "长" to "長", // chang
+    "动" to "動", // dong
+    "开" to "開", // kai
+    "轮" to "輪", // lun
+    "声" to "聲", // sheng
+    "带" to "帶", // dai
+    "弹" to "彈", // tan
+    "来" to "來", // lai
+    "园" to "園", // yuan
+    "搯" to "掐", // tao
+    "劈" to "擘", // pi
+    "拨" to "撥", // bo
+    "刺" to "剌", // la
+    "历" to "歷", // li
+    "歴" to "歷",
+    "滚" to "滾", // gun
+    "叠" to "疊", // die
+    "鏁" to "鎖", // suo
+    "锁" to "鎖",
+    "鎻" to "鎖",
+    "绰" to "綽", // chuo
+    "缓" to "緩", // huan
+    "连" to "連", // lian
+    "进" to "進", // jin
+    "双" to "雙", // shuang
+    "龊" to "齪", // chuo
+    "罨" to "掩", // yan
+    "少" to "小", // xiao
+    "对" to "對", // dui
+    "换" to "換", // huan
+)
 
 /*
-todo: implement pinyin input, more difficult than direct Chinese input because of conflicting pinyins
+todo: implement pinyin input, more difficult than direct Chinese input because of conflicting pinyin's
 conflicting pinyin's:
     san - both 三， 散
     shi - 食， 十
@@ -36,40 +66,6 @@ val RHPinyinLUT = mapOf(
     "zhai" to "摘",
     "tuo" to "托",
     "pi" to "擘"
-)
-
-val unifyHanziMap = mapOf(
-    "踢" to "剔", // ti
-    "长" to "長", // chang
-    "动" to "動", // dong
-    "开" to "開", // kai
-    "轮" to "輪", // lun
-    "声" to "聲", // sheng
-    "带" to "帶", // dai
-    "弹" to "彈", // tan
-    "来" to "來", // lai
-    "园" to "園", // yuan
-    "搯" to "掐", // tao
-    "劈" to "擘", // pi
-    "拨" to "撥", // bo
-    "刺" to "剌", // la
-    "历" to "歷", // li
-    "歴" to "歷",
-    "滚" to "滾", // gun
-    "叠" to "疊", // die
-    "鏁" to "鎖", // suo
-    "锁" to "鎖",
-    "鎻" to "鎖",
-    "绰" to "綽", // chuo
-    "缓" to "緩", // huan
-    "连" to "連", // lian
-    "进" to "進", // jin
-    "双" to "雙", // shuang
-    "龊" to "齪", // chuo
-    "罨" to "掩", // yan
-    "少" to "小", // xiao
-    "对" to "對", // dui
-    "换" to "換" // huan
 )
 
 val fuzzyJianzi = mapOf(
