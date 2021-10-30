@@ -3,7 +3,7 @@ const val HANZI_CODE_MIN: Int = 11904
 
 val sequentialJianziTrigger = setOf("歷","拂","輪","彈","鎖","園","滾")
 // what to do for mogou, gouti, motiao, dazhai, tuopi?
-val polyphonicJianziTrigger = setOf("撮","同","合","剌","撥")
+val polyphonicJianziTrigger = setOf("撮","同","剌","撥")
 
 fun isNumber(input: String) : Boolean {
     return when (input) {
@@ -12,4 +12,3 @@ fun isNumber(input: String) : Boolean {
         else -> false
     }
 }
-

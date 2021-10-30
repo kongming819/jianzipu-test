@@ -1,7 +1,7 @@
 fun main() {
     // ======== test texts:========
     // <blank>
-    // 大九半挑六
+    // 大九半绰挑六
     // da jiu tiao liu
     // !@#$
     // é
@@ -15,16 +15,14 @@ fun main() {
             tokens = tokenize(input)
             if (tokens.isEmpty()) continue
             val unifiedTokens = unifyHanziTokens(tokens)
-            parseTokens(unifiedTokens)
+            val finalParsedTokens = parseTokens(unifiedTokens)
+            println("Final parsed tokens are $finalParsedTokens") //debug
         }
     }
 }
 
 fun inputJianzi() : String {
     print("Input: ")
-    val input: String? = readLine()
-    // return input if it's not blank or null
-    return if (input != "" && input != null) {
-        input
-    } else ""
+    // return "" if null
+    return readLine() ?: ""
 }
